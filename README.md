@@ -9,3 +9,11 @@ Questo progetto utilizza le seguenti librerie:
 - [Vulkan Memory Allocator (VMA)](https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator) - distribuito sotto licenza MIT.
 - [vk-bootstrap](https://github.com/charles-lunarg/vk-bootstrap) - distribuito sotto licenza MIT.
 
+## Compilazione ed esecuzione
+
+```bash
+mkdir project
+cd project
+git clone https://github.com/AndreaMissaggia/Fluid-Simulation.git
+cd Fluid-Simulation
+make run
