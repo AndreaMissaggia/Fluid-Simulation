@@ -700,10 +700,10 @@ void Engine::compute_simulation_step(VkCommandBuffer cmd_buff)
     #define NUM_ITER 20
 
     // diffusion
-    // pression
+    // pressure
     // remove divergency
     // advection
-    // pression
+    // pressure
     // rempove divergency
 
     // Diffusion pass
@@ -712,7 +712,7 @@ void Engine::compute_simulation_step(VkCommandBuffer cmd_buff)
     // Assicura che tutte le operazioni di scrittura siano completate prima del prossimo step
     vkCmdPipelineBarrier(cmd_buff, VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT, VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT, 0, 1, &memory_barrier, 0, nullptr, 0, nullptr);
 
-    // Pression pass
+    // Pressure pass
     run_jacobi_solver(cmd_buff, _jacobi_pressure_pipeline_handle, _jacobi_pressure_pipeline_layout_handle, pc, NUM_ITER );
 
     // Assicura che tutte le operazioni di scrittura siano completate prima del prossimo step
@@ -736,7 +736,7 @@ void Engine::compute_simulation_step(VkCommandBuffer cmd_buff)
     // Assicura che tutte le operazioni di scrittura siano completate prima del prossimo step
     vkCmdPipelineBarrier(cmd_buff, VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT, VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT, 0, 1, &memory_barrier, 0, nullptr, 0, nullptr);
 
-    // Pression pass
+    // Pressure pass
     run_jacobi_solver(cmd_buff, _jacobi_pressure_pipeline_handle, _jacobi_pressure_pipeline_layout_handle, pc, NUM_ITER );
 
     // Assicura che tutte le operazioni di scrittura siano completate prima del prossimo step
