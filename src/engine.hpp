@@ -163,8 +163,8 @@ private:
     VkPipeline       _jacobi_diffusion_pipeline_handle        {};
     VkPipelineLayout _jacobi_diffusion_pipeline_layout_handle {};
 
-    VkPipeline       _jacobi_pression_pipeline_handle        {};
-    VkPipelineLayout _jacobi_pression_pipeline_layout_handle {};
+    VkPipeline       _jacobi_pressure_pipeline_handle        {};
+    VkPipelineLayout _jacobi_pressure_pipeline_layout_handle {};
 
     VkPipeline       _advection_pipeline_handle        {};
     VkPipelineLayout _advection_pipeline_layout_handle {};

@@ -491,7 +491,7 @@ void Engine::init_pipelines()
     init_compute_pipeline(_advection_pipeline_handle, _advection_pipeline_layout_handle, spv_direcory_path() + "advection.comp.spv");
     init_compute_pipeline(_swap_pipeline_handle, _swap_pipeline_layout_handle, spv_direcory_path() + "swap.comp.spv");
     init_compute_pipeline(_jacobi_diffusion_pipeline_handle, _jacobi_diffusion_pipeline_layout_handle, spv_direcory_path() + "jacobi_diffusion.comp.spv");
-    init_compute_pipeline(_jacobi_pression_pipeline_handle, _jacobi_pression_pipeline_layout_handle, spv_direcory_path() + "jacobi_pression.comp.spv");
+    init_compute_pipeline(_jacobi_pressure_pipeline_handle, _jacobi_pressure_pipeline_layout_handle, spv_direcory_path() + "jacobi_pressure.comp.spv");
     init_compute_pipeline(_remove_divergency_pipeline_handle, _remove_divergency_pipeline_layout_handle, spv_direcory_path() + "remove_divergency.comp.spv");
 }
 
@@ -713,7 +713,7 @@ void Engine::compute_simulation_step(VkCommandBuffer cmd_buff)
     vkCmdPipelineBarrier(cmd_buff, VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT, VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT, 0, 1, &memory_barrier, 0, nullptr, 0, nullptr);
 
     // Pression pass
-    run_jacobi_solver(cmd_buff, _jacobi_pression_pipeline_handle, _jacobi_pression_pipeline_layout_handle, pc, NUM_ITER );
+    run_jacobi_solver(cmd_buff, _jacobi_pressure_pipeline_handle, _jacobi_pressure_pipeline_layout_handle, pc, NUM_ITER );
 
     // Assicura che tutte le operazioni di scrittura siano completate prima del prossimo step
     vkCmdPipelineBarrier(cmd_buff, VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT, VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT, 0, 1, &memory_barrier, 0, nullptr, 0, nullptr);
@@ -737,7 +737,7 @@ void Engine::compute_simulation_step(VkCommandBuffer cmd_buff)
     vkCmdPipelineBarrier(cmd_buff, VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT, VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT, 0, 1, &memory_barrier, 0, nullptr, 0, nullptr);
 
     // Pression pass
-    run_jacobi_solver(cmd_buff, _jacobi_pression_pipeline_handle, _jacobi_pression_pipeline_layout_handle, pc, NUM_ITER );
+    run_jacobi_solver(cmd_buff, _jacobi_pressure_pipeline_handle, _jacobi_pressure_pipeline_layout_handle, pc, NUM_ITER );
 
     // Assicura che tutte le operazioni di scrittura siano completate prima del prossimo step
     vkCmdPipelineBarrier(cmd_buff, VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT, VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT, 0, 1, &memory_barrier, 0, nullptr, 0, nullptr);
