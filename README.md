@@ -11,6 +11,7 @@ Questo progetto utilizza le seguenti librerie:
 
 Questo progetto dipende dai seguenti pacchetti:
 
+- g++
 - sdl2
 - glm
 - vulkan (GPU vendor specific)
