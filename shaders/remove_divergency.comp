@@ -1,0 +1,69 @@
+#version 460
+
+// Size of a workgroup for compute
+layout (local_size_x = 16, local_size_y = 16) in;
+
+// Input images
+layout(rgba32f, set = 0, binding = 0) uniform image2D field_current;
+layout(rgba32f, set = 0, binding = 1) uniform image2D field_next;
+layout(rgba32f, set = 0, binding = 2) uniform image2D image;
+
+// Push constants for delta time and mouse inputs
+layout(push_constant) uniform constants
+{
+    uint mouse_down;
+    uint delta_time;
+    ivec2 mouse_pos;
+} pc;
+
+vec2 pressureGradient(ivec2 coords, float dx, float dy)
+{
+    //        T
+    //
+    //    L   X   R x+
+    //
+    //        B y+
+
+    // Caricamento dei valori di pressione dai vicini (L, R, T, B)
+    float L = imageLoad( field_current, coords - ivec2(1, 0) ).z;
+    float R = imageLoad( field_current, coords + ivec2(1, 0) ).z;
+    float T = imageLoad( field_current, coords - ivec2(0, 1) ).z;
+    float B = imageLoad( field_current, coords + ivec2(0, 1) ).z;
+
+    // Calcolo gradiente della pressione
+    return vec2( ( R - L ) / ( 2 * dx ), ( B - T ) / ( 2 * dy ) );
+}
+
+void main()
+{
+    ivec2 coords = ivec2(gl_GlobalInvocationID.xy);
+
+    vec4 old = imageLoad( field_current, coords );
+    vec2 div_free_vel = old.xy - pressureGradient( coords, 1.0f, 1.0f );
+    imageStore( field_current, coords, vec4( div_free_vel.xy, old.zw ) );
+
+    // image output
+    float color = clamp( length( div_free_vel ) * 0.5f, 0.0, 1.0 );
+    imageStore( image, coords, vec4( 0.0, color, 0.0, 1.0 ) );
+
+    // obstacles
+    vec4 obstacles_color = vec4( 0.067, 0.067, 0.067, 1.0 );
+    // spheres
+    if
+    (
+        length( coords - vec2( 1100, 500 ) ) < 100.0f ||
+        length( coords - vec2( 1200, 300 ) ) <  75.0f ||
+        length( coords - vec2( 1400, 500 ) ) < 120.0f ||
+        length( coords - vec2( 1250, 425 ) ) <  25.0f
+    )
+    {
+        imageStore( image, coords, obstacles_color );
+    }
+
+    // boundries
+    ivec2 img_size = imageSize( image );
+    if ( coords.x <= 10 || coords.y <= 10 || img_size.x - coords.x <= 10 || img_size.y - coords.y <= 10 )
+    {
+        imageStore( image, coords, obstacles_color );
+    }
+}

@@ -1,0 +1,63 @@
+#version 460
+
+// Size of a workgroup for compute
+layout (local_size_x = 16, local_size_y = 16) in;
+
+// Input images
+layout(rgba32f, set = 0, binding = 0) uniform image2D field_current;
+layout(rgba32f, set = 0, binding = 1) uniform image2D field_next;
+layout(rgba32f, set = 0, binding = 2) uniform image2D image;
+
+// Push constants for delta time and mouse inputs
+layout(push_constant) uniform constants
+{
+    uint mouse_down;
+    uint delta_time;
+    ivec2 mouse_pos;
+} pc;
+
+vec4 bilinearInterpolation( vec2 pos )
+{
+
+    //    (0,0)  (1,0)
+    //
+    //      A      B
+    //
+    //           .
+    //      C      D
+    //
+    //    (0,1)  (1,1)
+
+
+    ivec2 pos_floor = ivec2( pos ); // floored pos
+    vec2  pos_fract = fract( pos ); // fractional part
+
+    vec4 A = imageLoad( field_current, pos_floor );
+    vec4 B = imageLoad( field_current, pos_floor + ivec2( 1, 0 ) );
+    vec4 C = imageLoad( field_current, pos_floor + ivec2( 0, 1 ) );
+    vec4 D = imageLoad( field_current, pos_floor + ivec2( 1, 1 ) );
+
+    return mix( mix( A, B, pos_fract.x ), mix( C, D, pos_fract.x ), pos_fract.y );
+}
+
+void advect( ivec2 coords, float dt )
+{
+    vec2 actual_velocity = imageLoad( field_current, coords ).xy;
+
+    // Follow the velocity back
+    vec2 previous_location = coords - dt * actual_velocity;
+
+    // Interpolate
+    vec2 advected_velocity = bilinearInterpolation( previous_location ).xy;
+
+    vec2 old_zw = imageLoad( field_current, coords ).zw;
+    imageStore( field_next, coords, vec4( advected_velocity.xy, old_zw ) );
+}
+
+void main()
+{
+    ivec2 coords = ivec2( gl_GlobalInvocationID.xy );
+
+    float dt = pc.delta_time / 1.0f;
+    advect( coords, dt );
+}

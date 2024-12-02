@@ -1,0 +1,68 @@
+#version 460
+
+// Size of a workgroup for compute
+layout (local_size_x = 16, local_size_y = 16) in;
+
+// Input images
+layout(rgba32f, set = 0, binding = 0) uniform image2D field_current;
+layout(rgba32f, set = 0, binding = 1) uniform image2D field_next;
+layout(rgba32f, set = 0, binding = 2) uniform image2D image;
+
+// Push constants for delta time and mouse inputs
+layout(push_constant) uniform constants
+{
+    uint mouse_down;
+    uint delta_time;
+    ivec2 mouse_pos;
+} pc;
+
+float velocityDivergency(ivec2 coords, float dx, float dy)
+{
+    //        T
+    //
+    //    L   X   R x+
+    //
+    //        B y+
+
+    // Caricamento dei valori dai vicini (L, R, T, B)
+    vec2 L = imageLoad( field_current, coords - ivec2(1, 0) ).xy;
+    vec2 R = imageLoad( field_current, coords + ivec2(1, 0) ).xy;
+    vec2 T = imageLoad( field_current, coords - ivec2(0, 1) ).xy;
+    vec2 B = imageLoad( field_current, coords + ivec2(0, 1) ).xy;
+
+    // Calcolo divergenza della velocità
+    return ( R.x - L.x ) / ( 2 * dx ) + ( B.y - T.y ) / ( 2 * dy );
+}
+
+// Risolvere le equazioni di Poisson Ax = b usando il metodo di Jacobi
+void jacobiSolver( ivec2 coords /*, float alpha, float beta*/ )
+{
+    //        T
+    //
+    //    L   X   R x+
+    //
+    //        B y+
+
+    // Caricamento dei valori di pressione dai vicini (L, R, T, B)
+    float L = imageLoad( field_current, coords - ivec2(1, 0) ).z;
+    float R = imageLoad( field_current, coords + ivec2(1, 0) ).z;
+    float T = imageLoad( field_current, coords - ivec2(0, 1) ).z;
+    float B = imageLoad( field_current, coords + ivec2(0, 1) ).z;
+
+    // Divergenza della velocità
+    float vel_div = velocityDivergency( coords, 1.0f, 1.0f );
+
+    // Calcolo del nuovo valore di pressione
+    float p_new = ( ( R + L + B + T ) - vel_div ) / 4.0f;
+
+    // Salvataggio del nuovo valore nel campo next
+    vec4 tmp = imageLoad( field_next, coords );
+    tmp.z = p_new;
+    imageStore( field_next, coords, tmp );
+}
+
+void main()
+{
+    ivec2 coords = ivec2(gl_GlobalInvocationID.xy);
+    jacobiSolver( coords );
+}

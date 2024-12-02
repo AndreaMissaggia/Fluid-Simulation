@@ -1,0 +1,189 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++20",
+      "-O2",
+      "-Ilib/vkbootstrap",
+      "-Ilib/vkinitializers",
+      "-Ilib/vma",
+      "-o",
+      "bin/dedalo_engine",
+      "src/deletion_queue.cpp"
+    ],
+    "directory": "/home/dart/Projects/dedalo",
+    "file": "/home/dart/Projects/dedalo/src/deletion_queue.cpp",
+    "output": "/home/dart/Projects/dedalo/bin/dedalo_engine"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++20",
+      "-O2",
+      "-Ilib/vkbootstrap",
+      "-Ilib/vkinitializers",
+      "-Ilib/vma",
+      "-o",
+      "bin/dedalo_engine",
+      "src/descriptor_allocator.cpp"
+    ],
+    "directory": "/home/dart/Projects/dedalo",
+    "file": "/home/dart/Projects/dedalo/src/descriptor_allocator.cpp",
+    "output": "/home/dart/Projects/dedalo/bin/dedalo_engine"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++20",
+      "-O2",
+      "-Ilib/vkbootstrap",
+      "-Ilib/vkinitializers",
+      "-Ilib/vma",
+      "-o",
+      "bin/dedalo_engine",
+      "src/descriptor_layout_builder.cpp"
+    ],
+    "directory": "/home/dart/Projects/dedalo",
+    "file": "/home/dart/Projects/dedalo/src/descriptor_layout_builder.cpp",
+    "output": "/home/dart/Projects/dedalo/bin/dedalo_engine"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++20",
+      "-O2",
+      "-Ilib/vkbootstrap",
+      "-Ilib/vkinitializers",
+      "-Ilib/vma",
+      "-o",
+      "bin/dedalo_engine",
+      "src/engine.cpp"
+    ],
+    "directory": "/home/dart/Projects/dedalo",
+    "file": "/home/dart/Projects/dedalo/src/engine.cpp",
+    "output": "/home/dart/Projects/dedalo/bin/dedalo_engine"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++20",
+      "-O2",
+      "-Ilib/vkbootstrap",
+      "-Ilib/vkinitializers",
+      "-Ilib/vma",
+      "-o",
+      "bin/dedalo_engine",
+      "src/logger.cpp"
+    ],
+    "directory": "/home/dart/Projects/dedalo",
+    "file": "/home/dart/Projects/dedalo/src/logger.cpp",
+    "output": "/home/dart/Projects/dedalo/bin/dedalo_engine"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++20",
+      "-O2",
+      "-Ilib/vkbootstrap",
+      "-Ilib/vkinitializers",
+      "-Ilib/vma",
+      "-o",
+      "bin/dedalo_engine",
+      "src/main.cpp"
+    ],
+    "directory": "/home/dart/Projects/dedalo",
+    "file": "/home/dart/Projects/dedalo/src/main.cpp",
+    "output": "/home/dart/Projects/dedalo/bin/dedalo_engine"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++20",
+      "-O2",
+      "-Ilib/vkbootstrap",
+      "-Ilib/vkinitializers",
+      "-Ilib/vma",
+      "-o",
+      "bin/dedalo_engine",
+      "src/result_check.cpp"
+    ],
+    "directory": "/home/dart/Projects/dedalo",
+    "file": "/home/dart/Projects/dedalo/src/result_check.cpp",
+    "output": "/home/dart/Projects/dedalo/bin/dedalo_engine"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++20",
+      "-O2",
+      "-Ilib/vkbootstrap",
+      "-Ilib/vkinitializers",
+      "-Ilib/vma",
+      "-o",
+      "bin/dedalo_engine",
+      "src/shader_complier.cpp"
+    ],
+    "directory": "/home/dart/Projects/dedalo",
+    "file": "/home/dart/Projects/dedalo/src/shader_complier.cpp",
+    "output": "/home/dart/Projects/dedalo/bin/dedalo_engine"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++20",
+      "-O2",
+      "-Ilib/vkbootstrap",
+      "-Ilib/vkinitializers",
+      "-Ilib/vma",
+      "-o",
+      "bin/dedalo_engine",
+      "src/spriv_file_reader.cpp"
+    ],
+    "directory": "/home/dart/Projects/dedalo",
+    "file": "/home/dart/Projects/dedalo/src/spriv_file_reader.cpp",
+    "output": "/home/dart/Projects/dedalo/bin/dedalo_engine"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++20",
+      "-O2",
+      "-Ilib/vkbootstrap",
+      "-Ilib/vkinitializers",
+      "-Ilib/vma",
+      "-o",
+      "bin/dedalo_engine",
+      "lib/vkbootstrap/VkBootstrap.cpp"
+    ],
+    "directory": "/home/dart/Projects/dedalo",
+    "file": "/home/dart/Projects/dedalo/lib/vkbootstrap/VkBootstrap.cpp",
+    "output": "/home/dart/Projects/dedalo/bin/dedalo_engine"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++20",
+      "-O2",
+      "-Ilib/vkbootstrap",
+      "-Ilib/vkinitializers",
+      "-Ilib/vma",
+      "-o",
+      "bin/dedalo_engine",
+      "lib/vkinitializers/vk_initializers.cpp"
+    ],
+    "directory": "/home/dart/Projects/dedalo",
+    "file": "/home/dart/Projects/dedalo/lib/vkinitializers/vk_initializers.cpp",
+    "output": "/home/dart/Projects/dedalo/bin/dedalo_engine"
+  }
+]

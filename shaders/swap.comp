@@ -1,0 +1,26 @@
+#version 460
+
+// Size of a workgroup for compute
+layout (local_size_x = 16, local_size_y = 16) in;
+
+// Input images (fields + draw image)
+layout(rgba32f, set = 0, binding = 0) uniform image2D field_current;
+layout(rgba32f, set = 0, binding = 1) uniform image2D field_next;
+layout(rgba32f, set = 0, binding = 2) uniform image2D image;
+
+// Push constants for delta time and mouse position
+layout(push_constant) uniform constants
+{
+    uint mouse_down;
+    uint delta_time;
+    ivec2 mouse_pos;
+} pc;
+
+void main()
+{
+    ivec2 coords = ivec2( gl_GlobalInvocationID.xy );
+
+    vec4 color = imageLoad( field_next, coords );
+    color.w = 1.0;
+    imageStore( field_current, coords, color );
+}

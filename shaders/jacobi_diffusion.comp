@@ -1,0 +1,91 @@
+#version 460
+
+// Size of a workgroup for compute
+layout (local_size_x = 16, local_size_y = 16) in;
+
+// Input images
+layout(rgba32f, set = 0, binding = 0) uniform image2D field_current;
+layout(rgba32f, set = 0, binding = 1) uniform image2D field_next;
+layout(rgba32f, set = 0, binding = 2) uniform image2D image;
+
+// Push constants for delta time and mouse inputs
+layout(push_constant) uniform constants
+{
+    uint mouse_down;
+    uint delta_time;
+    ivec2 mouse_pos;
+} pc;
+
+// Risolvere le equazioni di Poisson Ax = b usando il metodo di Jacobi
+void jacobiSolver( ivec2 coords, float diffusion_rate, float dt )
+{
+    //        T
+    //
+    //    L   X   R
+    //
+    //        B
+
+    // Caricamento dei valori di velocità dai vicini (L, R, T, B)
+    vec2 L = imageLoad( field_current, coords - ivec2(1, 0) ).xy;
+    vec2 R = imageLoad( field_current, coords + ivec2(1, 0) ).xy;
+    vec2 T = imageLoad( field_current, coords - ivec2(0, 1) ).xy;
+    vec2 B = imageLoad( field_current, coords + ivec2(0, 1) ).xy;
+
+    vec2 X = imageLoad( field_current, coords ).xy;
+
+    float dff = diffusion_rate * dt;
+    // Calcolo del nuovo valore di velocità
+    vec2  new_vel = ( X + dff * 0.25f * ( R + L + B + T ) ) / ( 1.0f + dff );
+
+    // Salvataggio del nuovo valore nel campo next
+    vec2 old_zw = imageLoad( field_next, coords ).zw;
+    imageStore( field_next, coords, vec4(new_vel, old_zw) );
+}
+
+void main()
+{
+    ivec2 coords = ivec2(gl_GlobalInvocationID.xy);
+    float dt = pc.delta_time / 1.0f;
+
+    vec4 velocity = imageLoad( field_current, coords );
+
+    if ( length( vec2( coords ) - pc.mouse_pos.xy ) < 10.0 && pc.mouse_down == 1 )
+    {
+        velocity.x += 0.003 * dt;
+        imageStore( field_current, coords, velocity );
+    }
+
+/*  // square
+    if (coords.x > 1230 && coords.x < 1330 && coords.y > 500 && coords.y < 600)
+    {
+        velocity.xy = vec2(0.0, 0.0);
+        imageStore( field_current, coords, velocity );
+    }
+*/
+
+    vec4 obstacles_color = vec4( 1.0, 1.0, 1.0, 1.0 );
+    // spheres
+    if
+    (
+            length( coords - vec2( 1100, 500 ) ) < 100.0f ||
+            length( coords - vec2( 1200, 300 ) ) <  75.0f ||
+            length( coords - vec2( 1400, 500 ) ) < 120.0f ||
+            length( coords - vec2( 1250, 425 ) ) <  25.0f
+    )
+    {
+        velocity.xy = vec2(0.0, 0.0);
+        imageStore( field_current, coords, velocity );
+        imageStore( image, coords, obstacles_color );
+    }
+
+    // boundries
+    ivec2 img_size = imageSize( image );
+    if ( coords.x <= 10 || coords.y <= 10 || img_size.x - coords.x <= 10 || img_size.y - coords.y <= 10 )
+    {
+        velocity.xy = vec2(0.0, 0.0);
+        imageStore( field_current, coords, velocity );
+        imageStore( image, coords, obstacles_color );
+    }
+
+    jacobiSolver( coords, 0.004f, dt );
+}
