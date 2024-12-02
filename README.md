@@ -19,7 +19,7 @@ Questo progetto dipende dai seguenti pacchetti:
 - vulkan-validation-layers
 - glslang
 
-## Compilazione ed esecuzione
+## Compilazione ed esecuzione (Linux)
 
 ```bash
 mkdir project
