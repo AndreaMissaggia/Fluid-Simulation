@@ -35,7 +35,7 @@ float velocityDivergency(ivec2 coords, float dx, float dy)
 }
 
 // Risolvere le equazioni di Poisson Ax = b usando il metodo di Jacobi
-void jacobiSolver( ivec2 coords /*, float alpha, float beta*/ )
+void jacobiSolver( ivec2 coords )
 {
     //        T
     //
