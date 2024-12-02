@@ -16,6 +16,7 @@ Questo progetto dipende dai seguenti pacchetti:
 - vulkan (GPU vendor specific)
 - vulkan-headers
 - vulkan-validation-layers
+- glslang
 
 ## Compilazione ed esecuzione
 
