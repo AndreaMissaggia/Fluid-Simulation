@@ -27,3 +27,8 @@ cd project
 git clone https://github.com/AndreaMissaggia/Fluid-Simulation.git
 cd Fluid-Simulation
 make run
+
+##Riferimenti
+
+- [Joe Stam. 1999. "Stable Fluids." In Proceedings of SIGGRAPH 1999](https://www.researchgate.net/publication/2486965_Stable_Fluids).
+- [Mark J. Harris. 2004. "Fast Fluid Dynamics Simulation on the GPU".](https://github.com/charles-lunarg/vk-bootstrap](https://developer.nvidia.com/gpugems/gpugems/part-vi-beyond-triangles/chapter-38-fast-fluid-dynamics-simulation-gpu)
