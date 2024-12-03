@@ -33,5 +33,3 @@ cd project
 git clone https://github.com/AndreaMissaggia/Fluid-Simulation.git
 cd Fluid-Simulation
 make run
-
-
