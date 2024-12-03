@@ -23,6 +23,7 @@ Questo progetto dipende dai seguenti pacchetti:
 
 - [Joe Stam. 1999. "Stable Fluids." In Proceedings of SIGGRAPH 1999](https://www.researchgate.net/publication/2486965_Stable_Fluids).
 - [Mark J. Harris. 2004. "Fast Fluid Dynamics Simulation on the GPU".](https://developer.nvidia.com/gpugems/gpugems/part-vi-beyond-triangles/chapter-38-fast-fluid-dynamics-simulation-gpu)
+- [Victor Blanco. 2020. "Vulkan Guide"](https://vkguide.dev/).
 
 ## Compilazione ed esecuzione (Linux)
 
